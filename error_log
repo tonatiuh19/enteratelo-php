@@ -1,0 +1,5 @@
+[28-Jul-2025 12:44:58 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Column 'user_id' cannot be null in /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php:65
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php(65): mysqli_stmt->execute()
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php on line 65
