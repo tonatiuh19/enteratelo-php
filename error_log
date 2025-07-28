@@ -1,5 +1,30 @@
-[28-Jul-2025 12:44:58 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Column 'user_id' cannot be null in /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php:65
+[28-Jul-2025 16:15:24 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
 Stack trace:
-#0 /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php(65): mysqli_stmt->execute()
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
 #1 {main}
-  thrown in /home3/alanchat/garbrix.com/enteratelo/api/sendCodeByMail.php on line 65
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
+[28-Jul-2025 16:15:34 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
+[28-Jul-2025 16:15:37 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
+[28-Jul-2025 16:15:37 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
+[28-Jul-2025 16:15:37 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
+[28-Jul-2025 16:15:37 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'a.active' in 'where clause' in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php:15
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php(15): mysqli->query('SELECT a.name, ...')
+#1 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/getCategories.php on line 15
