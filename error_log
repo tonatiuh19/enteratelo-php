@@ -1,5 +1,11 @@
-[28-Jul-2025 21:49:02 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Invalid JSON text: "The document is empty." at position 0 in value for column 'articles.gallery'. in /home3/alanchat/garbrix.com/enteratelo/api/insertArticle.php:168
+[29-Jul-2025 17:23:45 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Too many connections in /home3/alanchat/garbrix.com/enteratelo/api/db_cnn/cnn.php:8
 Stack trace:
-#0 /home3/alanchat/garbrix.com/enteratelo/api/insertArticle.php(168): mysqli->query('UPDATE articles...')
+#0 /home3/alanchat/garbrix.com/enteratelo/api/db_cnn/cnn.php(8): mysqli->__construct('mx50.hostgator....', 'alanchat_admin', Object(SensitiveParameterValue), 'alanchat_entera...')
+#1 /home3/alanchat/garbrix.com/enteratelo/api/getArticleBySlug.php(12): require_once('/home3/alanchat...')
+#2 {main}
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/db_cnn/cnn.php on line 8
+[29-Jul-2025 18:14:33 America/Mexico_City] PHP Fatal error:  Uncaught mysqli_sql_exception: Unknown column 'is_active' in 'field list' in /home3/alanchat/garbrix.com/enteratelo/api/hideArticle.php:24
+Stack trace:
+#0 /home3/alanchat/garbrix.com/enteratelo/api/hideArticle.php(24): mysqli->prepare('UPDATE articles...')
 #1 {main}
-  thrown in /home3/alanchat/garbrix.com/enteratelo/api/insertArticle.php on line 168
+  thrown in /home3/alanchat/garbrix.com/enteratelo/api/hideArticle.php on line 24

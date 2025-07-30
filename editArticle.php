@@ -11,18 +11,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 require_once('db_cnn/cnn.php');
 
-function fallback($value, $type = 'string') {
-    if ($value === null) {
-        switch ($type) {
-            case 'int': return 0;
-            case 'bool': return false;
-            case 'array': return [];
-            default: return '';
-        }
-    }
-    return $value;
-}
-
 function save_uploaded_image($file, $uploadDir) {
     if ($file['error'] === UPLOAD_ERR_OK) {
         $fileName = uniqid() . '_' . basename($file['name']);
@@ -37,19 +25,23 @@ function save_uploaded_image($file, $uploadDir) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $response = ['success' => false];
 
-    // Only multipart/form-data supported for images
     if (strpos($_SERVER['CONTENT_TYPE'], 'multipart/form-data') === false) {
         echo json_encode(['success' => false, 'error' => 'Content-Type must be multipart/form-data']);
         exit;
     }
 
-    // Get fields
+    $article_id = intval($_POST['id'] ?? 0);
+    if (!$article_id) {
+        echo json_encode(['success' => false, 'error' => 'Missing article id']);
+        exit;
+    }
+
+    // Get fields (same as insertArticle.php)
     $title = $conn->real_escape_string($_POST['title'] ?? '');
     $slug = $conn->real_escape_string($_POST['slug'] ?? '');
     $excerpt = $conn->real_escape_string($_POST['excerpt'] ?? '');
     $content_blocks = json_decode($_POST['content_blocks'] ?? '[]', true);
     $category_id = $_POST['category_id'];
-    $author_id = intval($_POST['author_id'] ?? 0);
     $meta_title = $conn->real_escape_string($_POST['meta_title'] ?? '');
     $meta_description = $conn->real_escape_string($_POST['meta_description'] ?? '');
     $meta_keywords = $conn->real_escape_string($_POST['meta_keywords'] ?? '');
@@ -70,12 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $tags = $conn->real_escape_string(json_encode($_POST['tags'] ?? []));
     $external_source = $conn->real_escape_string($_POST['external_source'] ?? '');
     $language = $conn->real_escape_string($_POST['language'] ?? 'es');
-    $created_at = date('Y-m-d H:i:s');
-    $updated_at = $created_at;
-
-    // Insert dummy article to get article_id
-    $conn->query("INSERT INTO articles (title, author_id, category_id, created_at, updated_at) VALUES ('$title', $author_id, $category_id, '$created_at', '$updated_at')");
-    $article_id = $conn->insert_id;
+    $updated_at = date('Y-m-d H:i:s');
 
     $uploadDir = __DIR__ . "/../data/articles/$article_id/images_used";
     if (!is_dir($uploadDir)) {
@@ -108,7 +95,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     unset($block);
 
-    // Convert content blocks to HTML (similar to your frontend)
     function blocks_to_html($blocks) {
         $html = '';
         foreach ($blocks as $block) {
@@ -132,7 +118,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
                     $html .= '</div>';
                     break;
-                // Add more cases as needed
                 default:
                     $html .= '<p>' . htmlspecialchars(is_string($content) ? $content : '') . '</p>';
             }
@@ -141,8 +126,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $content_html = blocks_to_html($content_blocks);
 
-    // Now update the article with all fields
+    // Update the article
     $sql = "UPDATE articles SET
+        title = '$title',
         slug = '$slug',
         excerpt = '$excerpt',
         content = '" . $conn->real_escape_string($content_html) . "',
@@ -171,14 +157,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     ";
 
     if ($conn->query($sql)) {
-        // Fetch all articles by this author
-        $result = $conn->query("SELECT * FROM articles WHERE author_id = $author_id ORDER BY created_at DESC");
-        $articles = [];
-        while ($row = $result->fetch_assoc()) {
-            $articles[] = $row;
-        }
+        $result = $conn->query("SELECT * FROM articles WHERE id = $article_id");
+        $article = $result->fetch_assoc();
         $response['success'] = true;
-        $response['articles'] = $articles;
+        $response['article'] = $article;
     } else {
         $response['error'] = $conn->error;
     }
