@@ -11,7 +11,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require_once('db_cnn/cnn.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $sql = "SELECT a.id, a.name, a.slug, a.description, a.icon, a.color, a.parent_id, a.sort_order, a.is_active, a.meta_title, a.meta_description, a.created_at, a.updated_at FROM categories as a WHERE a.is_active = 1";
+    $sql = "SELECT a.id, a.name, a.slug, a.description, a.icon, a.color, a.parent_id, a.sort_order, a.is_active, a.meta_title, a.meta_description, a.created_at, a.updated_at
+            FROM categories as a
+            WHERE a.is_active = 1
+              AND EXISTS (
+                  SELECT 1 FROM articles as ar
+                  WHERE ar.category_id = a.id AND ar.is_active = 1
+              )";
     $result = $conn->query($sql);
 
     $categories = [];
